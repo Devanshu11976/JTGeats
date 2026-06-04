@@ -1,24 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
+  <!-- ── Meta ── -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JTGeats — Authentic Home Food in India</title>
 
-  <!-- Google Fonts: Open Sans, Roboto, Squada One -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Roboto:wght@400;500&family=Squada+One&display=swap" rel="stylesheet" />
+  <!-- ── Fonts ── -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Roboto:wght@400;500&family=Squada+One&display=swap"
+    rel="stylesheet" />
 
-  <!-- Main Stylesheet -->
+  <!-- ── Stylesheet ── -->
   <link rel="stylesheet" href="style.css" />
+
 </head>
+
 <body>
 
-  <!-- ========== HEADER / NAV ========== -->
+  <!-- ════════════════════════════════════════
+       HEADER / NAV
+       Frame 38 — 1440×80px | bg #1AC073
+  ════════════════════════════════════════ -->
   <header class="site-header">
     <nav class="nav container">
+
+      <!-- Logo -->
       <div class="nav__logo">
         <div class="nav__brand">JTGeats</div>
       </div>
+
+      <!-- Main menu -->
       <ul class="nav__links">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
@@ -26,6 +40,8 @@
         <li><a href="#blog">Blog</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+
+      <!-- Search & Cart -->
       <div class="nav__icons">
         <button class="nav__icon-btn" aria-label="Search">
           <img src="assets/Search.svg" alt="Search" />
@@ -37,33 +53,59 @@
           <span class="nav__cart-badge"></span>
         </div>
       </div>
+
     </nav>
   </header>
+  <!-- /HEADER -->
 
-  <!-- ========== MAIN CONTENT ========== -->
+
+  <!-- ════════════════════════════════════════
+       MAIN CONTENT
+  ════════════════════════════════════════ -->
   <main id="main-content">
 
-  <!-- ========== HERO SECTION ========== -->
-  <section class="hero" id="home">
-    <div class="container hero__inner">
-      <div class="hero__content">
-        <h1 class="hero__heading">Authentic Home food in India</h1>
-        <p class="hero__subtext">JTGeats is a courier service in which authentic home cook food is delivered to a customer.</p>
-        <div class="hero__search">
-          <input type="text" class="hero__search-input" placeholder="Search food you love" />
-          <button class="hero__search-btn">Search</button>
+
+    <!-- ════════════════════════════════════════
+         HERO / LANDING SECTION
+         Frame 38 — 1440×800px | bg #1AC073
+    ════════════════════════════════════════ -->
+    <section class="hero" id="home">
+      <div class="container hero__inner">
+
+        <!-- Text content -->
+        <div class="hero__content">
+          <h1 class="hero__heading">Authentic Home food in India</h1>
+          <p class="hero__subtext">JTGeats is a courier service in which authentic home cook food is delivered to a
+            customer.</p>
+
+          <!-- Search bar -->
+          <div class="hero__search">
+            <input type="text" class="hero__search-input" placeholder="Search food you love" />
+            <button class="hero__search-btn">Search</button>
+          </div>
         </div>
+        <!-- /Text content -->
+
+        <!-- Chef illustration -->
+        <div class="hero__illustration">
+          <img src="assets/chef-illustration.svg" alt="Chef cooking" />
+        </div>
+        <!-- /Chef illustration -->
+
       </div>
-      <div class="hero__illustration">
-        <img src="assets/chef-illustration.svg" alt="Chef cooking" />
-      </div>
-    </div>
-  </section>
+    </section>
+    <!-- /HERO -->
+
 
   </main>
+  <!-- /MAIN CONTENT -->
 
-  <!-- ========== SCRIPTS ========== -->
+
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+  ════════════════════════════════════════ -->
   <script src="script.js"></script>
 
 </body>
+
 </html>
