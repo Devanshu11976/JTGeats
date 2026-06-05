@@ -65,9 +65,8 @@ document.addEventListener('DOMContentLoaded', function () {
   ═══════════════════════════════════════════════════════════ */
   if (typeof Swiper !== 'undefined' && document.querySelector('.popular__swiper')) {
     new Swiper('.popular__swiper', {
-      slidesPerView: 1,
-      slidesPerGroup: 1,
-      spaceBetween: 24,
+      slidesPerView: 'auto',
+      spaceBetween: 51,
       loop: true,
       grabCursor: true,
       speed: 600,
@@ -86,12 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
         nextEl: '#popularNext',
         prevEl: '#popularPrev',
       },
-
-      breakpoints: {
-        480: { slidesPerView: 1, slidesPerGroup: 1 },
-        768: { slidesPerView: 2, slidesPerGroup: 1 },
-        1024: { slidesPerView: 3, slidesPerGroup: 1 },
-      },
     });
   }
 
@@ -101,24 +94,29 @@ document.addEventListener('DOMContentLoaded', function () {
   ═══════════════════════════════════════════════════════════ */
 
   /* ── Element refs ── */
-  const video = document.getElementById('mainVideo');
-  const playIcon = document.getElementById('playIcon');
+  const video = document.getElementById('foodVideo');
+  const playBtn = document.getElementById('videoPlayBtn');
 
   /* ── Toggle play/pause ── */
   function togglePlay() {
-    if (!video || !playIcon) return;
+    if (!video) return;
     if (video.paused) {
       video.play();
-      playIcon.classList.add('hidden');
+      if (playBtn) playBtn.classList.add('hidden');
     } else {
       video.pause();
-      playIcon.classList.remove('hidden');
+      if (playBtn) playBtn.classList.remove('hidden');
     }
   }
 
-  /* ── Event listeners ── */
-  if (video) video.addEventListener('click', togglePlay);
-  if (playIcon) playIcon.addEventListener('click', togglePlay);
+  /* ── Show play button again when video ends ── */
+  if (video) {
+    video.addEventListener('click', togglePlay);
+    video.addEventListener('ended', function () {
+      if (playBtn) playBtn.classList.remove('hidden');
+    });
+  }
+  if (playBtn) playBtn.addEventListener('click', togglePlay);
 
 
   /* ═══════════════════════════════════════════════════════════
