@@ -116,7 +116,7 @@ open index.html
 
 <div align="center">
 
-### Made by **JTGeats Developer**
+### Made by **Devanshu Sharma**
 
 🌐 **Live Project** → [jtgeats-three.vercel.app](https://jtgeats-three.vercel.app/)
 
@@ -138,6 +138,6 @@ This project is for educational and portfolio purposes.
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=1AC073&height=120&section=footer&animation=fadeIn" width="100%"/>
 
-*Built with ❤️ — JTGeats © 2025*
+*Built with ❤️ — Devanshu Sharma © 2026*
 
 </div>
