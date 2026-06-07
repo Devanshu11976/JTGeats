@@ -47,12 +47,6 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  /* Hide scrollbar width so full 1440px is usable for pixel comparison */
-  scrollbar-width: none; /* Firefox */
-}
-
-html::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
 }
 
 body {
@@ -80,7 +74,7 @@ img {
 button {
   cursor: pointer;
   border: none;
-  outline: none;
+  /* outline: none removed — :focus-visible below handles focus styling safely */
   font-family: var(--font-family);
 }
 
@@ -88,10 +82,15 @@ input,
 button,
 textarea {
   font-family: var(--font-family);
-  outline: none;
+  /* outline: none removed from button here — :focus-visible handles it */
   border: none;
   -webkit-appearance: none;
   appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:focus-visible,
@@ -110,6 +109,19 @@ textarea:focus-visible {
   width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
+}
+
+/* Screen-reader only — visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .nav__links a,
@@ -147,7 +159,7 @@ textarea:focus-visible {
 .nav {
   width: 1164px;
   height: 24px;
-  margin-left: 146px;
+  margin: 0 auto;  /* centered by default for viewports > 1440px */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -171,6 +183,7 @@ textarea:focus-visible {
   letter-spacing: -0.012em;
   color: #FFFFFF;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 /* Frame 29 — right group: nav links + icons, W:751, spacing:257 */
@@ -236,6 +249,8 @@ textarea:focus-visible {
 
 .nav__icon-btn img {
   display: block;
+  object-fit: contain;
+  pointer-events: none; /* decorative — button handles the interaction */
 }
 
 /* Search icon 22×22 */
@@ -373,13 +388,15 @@ textarea:focus-visible {
   background: #F7F8FA;
   padding-top: 105px;
   padding-bottom: 129px;
+  overflow: visible;
 }
 
 .kitchen__inner {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 24px 80px;
   box-sizing: border-box;
+  overflow: visible;
 }
 
 .kitchen__title {
@@ -395,6 +412,7 @@ textarea:focus-visible {
 
 /* ═══════════════════════════════════════════════════════════
    7. FOOD CARD — exact Figma values
+   Card: 277×337px | Image: 250px | Details: 87px
 ═══════════════════════════════════════════════════════════ */
 .kitchen__grid {
   display: grid;
@@ -405,18 +423,31 @@ textarea:focus-visible {
 }
 
 .food-card {
+  width: 100%; /* fluid in grid, 1440px override sets 277px */
+  height: 337px;
+  background: #FFFFFF;
   border-radius: 10px;
-  overflow: visible;
-  background: transparent;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   min-width: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.food-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+
+/* Image wrapper — fixed 250px, never compresses */
 .food-card__img-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 277 / 250;
-  border-radius: 10px 10px 0 0;
+  height: 250px;
+  flex-shrink: 0;
   overflow: hidden;
   background-color: #797979;
 }
@@ -426,7 +457,6 @@ textarea:focus-visible {
   height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 10px 10px 0 0;
 }
 
 /* Badge — top-left, yellow */
@@ -450,31 +480,45 @@ textarea:focus-visible {
   color: #101115;
 }
 
-/* Details bar — 87px tall, padding 20px 24px, gap 10px */
+/* Details — exact Figma: 277×87px, padding 20px 24px, gap 10px */
 .food-card__details {
-  width: 100%;
-  height: 87px;
-  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 24px;
+  gap: 10px;
+  width: 100%; /* 1440px override sets 277px */
+  height: auto;
+  flex-shrink: 0;
   box-sizing: border-box;
   background: #FFFFFF;
   box-shadow: 0px 0px 1px rgba(187, 187, 187, 0.25);
   border-radius: 0 0 10px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 10px;
 }
 
-/* Name + Price row — gap 92px between name and price */
+/* Frame 16 — inner wrapper: 246×56px, gap 16px */
+.food-card__info-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 16px;
+  width: 100%; /* 1440px override sets 246px */
+  flex-shrink: 0;
+}
+
+/* Frame 14 — name + price row: Hug×20px, gap 92px */
 .food-card__info-row {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 0;
-  width: 100%;
-  justify-content: space-between;
+  justify-content: flex-start;
+  padding: 0;
+  gap: 92px;
+  width: fit-content;
   height: 20px;
+  flex-shrink: 0;
 }
 
 /* Name — Roboto 400 16px */
@@ -485,9 +529,8 @@ textarea:focus-visible {
   line-height: 20px;
   letter-spacing: -0.012em;
   color: #1B1C21;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Price — Roboto 400 16px */
@@ -498,20 +541,22 @@ textarea:focus-visible {
   line-height: 20px;
   letter-spacing: -0.012em;
   color: #1B1C21;
-  white-space: nowrap;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 
-/* Meta row — gap 98px between tags and add btn */
+/* Frame 15 — meta row: 241×20px, gap 98px */
 .food-card__meta {
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  gap: 8px; /* base fluid; 1440px override sets 98px */
   width: 100%;
-  height: 20px;
 }
 
+/* Frame 13 — tags: rating + time, gap 8px */
 /* Tags group — rating + time, gap 8px */
 .food-card__tags {
   display: flex;
@@ -546,6 +591,7 @@ textarea:focus-visible {
   width: 12px;
   height: 12px;
   object-fit: contain;
+  pointer-events: none; /* decorative */
 }
 
 /* Time badge — 62×20px, #F7F8FA, radius 5px */
@@ -581,7 +627,9 @@ textarea:focus-visible {
   justify-content: center;
   padding: 0;
   flex-shrink: 0;
+  line-height: 1; /* flex-centered — prevents phantom line-height space */
   transition: background-color 0.2s ease, transform 0.15s ease;
+  will-change: transform;
 }
 
 .food-card__add:hover {
@@ -593,6 +641,7 @@ textarea:focus-visible {
   width: 10px;
   height: 10px;
   object-fit: contain;
+  pointer-events: none; /* decorative — button handles the interaction */
 }
 
 /* Qty stepper — base: 22px add btn, upgrades to full stepper at 1440px */
@@ -655,48 +704,41 @@ textarea:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  width: 100%;
-  margin-bottom: 63px;
-  position: relative;
+  padding: 0;
+  gap: 37px;
+  width: 1178px;
+  margin: 0 auto;
+  padding-bottom: 0;
 }
 
 .popular__title {
   font-family: 'Roboto', sans-serif;
   font-weight: 800;
   font-size: 40px;
-  line-height: 20px;
-  height: 36px;
+  line-height: 36px;
   text-align: center;
   letter-spacing: -0.012em;
   color: #000000;
+  width: 427px;
+  flex-shrink: 0;
   margin: 0;
   padding: 0;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .popular__carousel-wrap {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  width: 1280px;
   height: 337px;
-  overflow: visible;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
-/* swiper: max 933px (3×277 + 2×51 gaps), fluid below */
+/* Swiper: 1178 - 71.5 (prev) - 71.5 (next) - gaps = 879px */
 .popular__swiper {
-  width: calc(100% - 160px);
-  max-width: 933px;
+  width: 879px;
   height: 337px;
-  overflow: hidden;
-  padding: 0;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .swiper-wrapper {
@@ -710,7 +752,11 @@ textarea:focus-visible {
   flex-shrink: 0;
 }
 
-.swiper-slide-active .food-card {
+.popular__swiper .swiper-slide-active {
+  opacity: 1;
+}
+
+.popular__swiper .swiper-slide-active .food-card--carousel {
   filter: drop-shadow(0px 6px 40px rgba(0, 0, 0, 0.14));
 }
 
@@ -724,34 +770,45 @@ textarea:focus-visible {
 .food-card--carousel .food-card__img-wrap {
   width: 277px;
   height: 250px;
-  aspect-ratio: unset;
   flex-shrink: 0;
+  aspect-ratio: unset;
 }
 
 .food-card--carousel .food-card__details {
   width: 277px;
-  height: 87px !important;
-  min-height: 87px !important;
-  padding: 0 24px !important;
-  gap: 10px !important;
+  height: 87px;
   flex-shrink: 0;
+  padding: 20px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
+
+.food-card--carousel .food-card__info-wrap {
+  width: 246px;
+  height: 56px;
+  gap: 16px;
+}
+
+/* Swiper slide details — removed: conflicts with .food-card--carousel .food-card__details override */
 
 .popular__arrow {
   position: absolute;
-  width: 71.5px;
-  height: 71.5px;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 20;
+  width: 71.5px;
+  height: 71.5px;
   background: none;
   border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   transition: transform 0.2s ease;
-  flex-shrink: 0;
+  will-change: transform;
 }
 
 .popular__arrow:hover {
@@ -784,6 +841,7 @@ textarea:focus-visible {
   padding: 19px 25px;
   width: 210px;
   height: 48px;
+  box-sizing: border-box;
   background: #1AC073;
   border-radius: 10px;
   border: none;
@@ -794,6 +852,7 @@ textarea:focus-visible {
   line-height: 20px;
   letter-spacing: -0.012em;
   color: #FFFFFF;
+  white-space: nowrap;
   transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
@@ -819,31 +878,43 @@ textarea:focus-visible {
 
   /* Nav — fluid layout */
   .nav {
-    width: calc(100% - 264px);
-    margin-left: 132px;
+    width: calc(100% - 80px);
+    margin-left: 40px;
+    flex-shrink: 1;
+  }
+
+  .nav__logo {
+    margin-left: 0;
   }
 
   .nav__right {
     width: auto;
-    gap: 40px;
+    gap: 30px;
+    flex-shrink: 1;
   }
 
   .nav__links {
     width: auto;
-    gap: 28px;
+    gap: 24px;
+    flex-shrink: 1;
   }
 
   .nav__links a {
     font-size: 15px;
   }
 
-  /* Hero — fluid */
+  /* Hero — fluid, vertically centered */
+  .hero {
+    min-height: 700px;
+    border-radius: 0 0 20px 20px;
+  }
+
   .hero__inner {
-    padding: 80px 132px;
+    padding: 80px 132px 60px;
     width: 100%;
     position: relative;
     height: auto;
-    min-height: 800px;
+    min-height: 700px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -853,8 +924,8 @@ textarea:focus-visible {
     position: relative;
     left: auto;
     top: auto;
-    width: 480px;
-    max-width: 50%;
+    width: 45%;
+    max-width: 534px;
     height: auto;
     gap: 24px;
     display: flex;
@@ -865,8 +936,9 @@ textarea:focus-visible {
   .hero__heading {
     width: auto;
     height: auto;
-    font-size: clamp(2.5rem, 4.5vw, 4.375rem);
+    font-size: clamp(2.5rem, 4vw, 4.375rem);
     line-height: 1.15;
+    margin: 0;
   }
 
   .hero__subtext {
@@ -898,9 +970,9 @@ textarea:focus-visible {
     position: absolute;
     right: 0;
     top: 0;
+    left: auto;
     width: 112px;
     height: 100%;
-    left: auto;
     font-size: 15px;
   }
 
@@ -908,7 +980,7 @@ textarea:focus-visible {
     position: relative;
     left: auto;
     top: auto;
-    width: 45%;
+    width: 48%;
     height: auto;
     display: flex;
     justify-content: flex-end;
@@ -934,10 +1006,6 @@ textarea:focus-visible {
     width: 100%;
     height: auto;
     padding: 0 40px;
-  }
-
-  .kitchen__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   /* Popular */
@@ -976,7 +1044,7 @@ textarea:focus-visible {
   .video-section {
     height: auto;
     min-height: 600px;
-    background: linear-gradient(to bottom, #FAFAFA 60%, #C7EACC 60%);
+    background: #FAFAFA;
   }
 
   .video-section__container {
@@ -1050,6 +1118,15 @@ textarea:focus-visible {
     column-gap: 20px;
   }
 
+  .popular__title {
+    width: 100%;
+  }
+
+  .popular__carousel-wrap {
+    height: auto;
+    min-height: 337px;
+  }
+
   .contact__inner {
     gap: 40px;
   }
@@ -1084,22 +1161,101 @@ textarea:focus-visible {
 /* ── 768px — Tablet portrait ── */
 @media (max-width: 768px) {
 
-  /* Nav — hide links, show only brand + icons */
-  .nav__right {
-    display: none;
+  /* Header fixed on mobile so dropdown anchors correctly */
+  .site-header {
+    position: fixed;
+    overflow: visible;
   }
 
+  /* Nav — full width, no overflow */
   .nav {
     width: calc(100% - 48px);
     margin-left: 24px;
+    position: relative;
+  }
+
+  .nav__right {
+    width: auto;
+    max-width: 100%;
+  }
+
+  /* Nav — hamburger replaces full menu */
+  .nav__hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .nav__hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #FFFFFF;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  /* X state when open */
+  .nav__hamburger--open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .nav__hamburger--open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav__hamburger--open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .nav__right {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background: #1AC073;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 24px 24px;
+    gap: 16px;
+    z-index: 200;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .nav__right--open {
+    display: flex;
+  }
+
+  .nav__links {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .nav__icons {
+    margin-top: 8px;
   }
 
   /* Hero — stack vertically */
+  .hero {
+    overflow: visible;
+    min-height: unset;
+  }
+
   .hero__inner {
     flex-direction: column;
     text-align: center;
-    padding: 100px 24px 60px;
-    gap: 40px;
+    padding: 100px 24px 20px;
+    gap: 16px;
     align-items: center;
     justify-content: center;
   }
@@ -1127,6 +1283,7 @@ textarea:focus-visible {
     width: 80%;
     max-width: 400px;
     justify-content: center;
+    margin-top: -180px;
   }
 
   /* Kitchen */
@@ -1148,28 +1305,69 @@ textarea:focus-visible {
   .food-card__details {
     height: auto;
     min-height: 80px;
-    padding: 10px 14px;
+    padding: 10px 12px;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .food-card__info-wrap {
+    width: 100%;
+    height: auto;
     gap: 8px;
   }
 
-  .food-card__name,
+  .food-card__info-row {
+    width: 100%;
+    height: auto;
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  .food-card__meta {
+    width: 100%;
+    height: auto;
+    gap: 6px;
+    margin-top: 0;
+  }
+
+  .food-card__name {
+    width: auto;
+    height: auto;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+  }
+
   .food-card__price {
-    font-size: 13px;
+    width: auto;
+    height: auto;
+    font-size: 12px;
   }
 
   .food-card__rating,
   .food-card__time {
     font-size: 10px;
     width: auto;
+    height: auto;
     padding: 0 3px;
   }
 
   /* Popular */
   .popular__title {
     font-size: 28px;
+    width: 100%;
   }
 
   /* Video section */
+  .video-section {
+    background: linear-gradient(to bottom, #FAFAFA 50%, #C7EACC 50%);
+  }
+
   .video-section__title {
     font-size: 24px;
   }
@@ -1231,10 +1429,7 @@ textarea:focus-visible {
   }
 
   .contact__right {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    height: auto;
+    display: none;
   }
 
   /* Footer */
@@ -1259,10 +1454,19 @@ textarea:focus-visible {
     justify-content: center;
     gap: 20px;
   }
+
+  .footer__social {
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 /* ── 480px — Mobile ── */
 @media (max-width: 480px) {
+
+  .hero__inner {
+    padding: 90px 20px 40px;
+  }
 
   .hero__heading {
     font-size: 2rem;
@@ -1299,12 +1503,86 @@ textarea:focus-visible {
     width: 100%;
   }
 
+  /* Video section — remove fixed pixel gradient stop on small screens */
+  .video-section {
+    background: linear-gradient(to bottom, #FAFAFA 50%, #C7EACC 50%);
+  }
+
+  /* Ensure kitchen section doesn't overflow */
+  .kitchen__inner {
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  /* Popular carousel */
+  .popular__carousel-wrap {
+    overflow: hidden;
+  }
+
   .footer__brand {
     font-size: 24px;
   }
 
   .footer__nav a {
     font-size: 14px;
+  }
+
+  /* Video card keeps aspect ratio */
+  .video-section__video-card {
+    aspect-ratio: 877 / 442;
+    height: auto;
+  }
+}
+
+/* ── 375px — Small mobile ── */
+@media (max-width: 375px) {
+
+  .hero__inner {
+    padding: 90px 16px 32px;
+  }
+
+  .hero__heading {
+    font-size: 1.75rem;
+  }
+
+  .kitchen__inner {
+    padding: 0 12px;
+  }
+
+  .kitchen__grid {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+
+  .popular__swiper {
+    width: calc(100% - 80px);
+  }
+
+  .popular__arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .popular__arrow svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .contact {
+    padding: 40px 16px;
+  }
+
+  .footer {
+    padding: 24px 16px;
+  }
+
+  .footer__menu {
+    gap: 16px;
+  }
+
+  .kitchen__cta-btn {
+    width: 100%;
+    max-width: 210px;
   }
 }
 
@@ -1314,7 +1592,11 @@ textarea:focus-visible {
 ═══════════════════════════════════════════════════════════ */
 @media (min-width: 1440px) {
 
-  /* ── Nav — already set in base styles ── */
+  /* ── Nav — exact Figma left offset at 1440px ── */
+  .nav {
+    margin-left: 146px;
+    margin-right: 0;
+  }
 
   /* ── Hero ── */
   .hero {
@@ -1323,10 +1605,10 @@ textarea:focus-visible {
   }
 
   .hero__inner {
-    width: 1440px;
-    max-width: 100vw;
-    box-sizing: border-box;
+    width: 100%;
+    max-width: 1440px;
     margin: 0 auto;
+    box-sizing: border-box;
     padding: 0;
     position: relative;
     height: 800px;
@@ -1412,16 +1694,6 @@ textarea:focus-visible {
     z-index: 3;
   }
 
-  .hero__search-btn span,
-  .hero__search-btn>* {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    letter-spacing: -0.012em;
-    color: #FFFFFF;
-  }
-
   .hero__illustration {
     position: absolute;
     left: 774px;
@@ -1439,8 +1711,8 @@ textarea:focus-visible {
 
   /* ── Kitchen ── */
   .kitchen {
-    width: 1440px;
-    height: 2029px;
+    width: 100%;
+    height: auto;
     padding-top: 105px;
     padding-bottom: 129px;
     box-sizing: border-box;
@@ -1448,7 +1720,7 @@ textarea:focus-visible {
 
   .kitchen__inner {
     width: 1180px;
-    height: 1217px;
+    height: auto;
     margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
@@ -1470,26 +1742,82 @@ textarea:focus-visible {
   .food-card {
     width: 277px;
     height: 337px;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-shrink: 0;
+    box-sizing: border-box;
   }
 
   .food-card__img-wrap {
     width: 277px;
     height: 250px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px 10px 0 0;
     aspect-ratio: unset;
   }
 
   .food-card__details {
     width: 277px;
     height: 87px;
-    padding: 0 24px;
+    flex-shrink: 0;
+    padding: 20px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+  }
+
+  .food-card__info-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    gap: 16px;
+    width: 246px;
+    height: 56px;
+    flex-shrink: 0;
+    overflow: visible;
   }
 
   .food-card__info-row {
-    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0;
+    gap: 92px;
+    width: fit-content;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .food-card__name {
+    width: 127px;
+    height: 20px;
+    flex: none;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .food-card__price {
+    width: 35px;
+    height: 20px;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .food-card__meta {
-    width: 100%;
+    width: 246px;
+    gap: 98px;
+    justify-content: space-between;
   }
 
   .food-card__rating {
@@ -1505,19 +1833,19 @@ textarea:focus-visible {
   /* ── Popular Items ── */
   .popular {
     width: 1178px;
-    height: auto;
-    margin: 0 auto;
-    margin-bottom: 24px;
+    height: 410px;
     gap: 37px;
+    padding-bottom: 0;
+    margin: 0 auto;
     overflow: visible;
   }
 
   .popular__title {
     width: 427px;
     height: 36px;
-    font-size: 40px;
-    font-weight: 800;
-    line-height: 20px;
+    line-height: 36px;
+    margin-top: -10px;
+    margin-bottom: 10px;
     flex-shrink: 0;
   }
 
@@ -1526,21 +1854,19 @@ textarea:focus-visible {
     height: 337px;
     overflow: visible;
     flex-shrink: 0;
+    position: relative;
   }
 
   .popular__swiper {
-    width: 933px;
+    width: 921px;
     height: 337px;
-    overflow: hidden;
-    padding: 0;
+    overflow: visible;
     margin: 0 auto;
+    position: relative;
   }
 
   .popular__arrow {
-    position: absolute;
-    width: 71.5px;
-    height: 71.5px;
-    top: 132.75px;
+    top: 132.75px;  /* (337 - 71.5) / 2 — exact Figma */
     transform: none;
     z-index: 20;
   }
@@ -1551,13 +1877,24 @@ textarea:focus-visible {
 
   .popular__arrow--prev {
     left: 0;
+    top: 132.75px;
     transform: none;
   }
 
+  .popular__arrow--prev:hover {
+    transform: scale(1.05);
+  }
+
   .popular__arrow--next {
-    right: 0;
+    left: 1106.5px;
+    right: auto;
+    top: 132.75px;
     transform: none;
     filter: drop-shadow(4px 5px 20px rgba(0, 0, 0, 0.2));
+  }
+
+  .popular__arrow--next:hover {
+    transform: scale(1.05);
   }
 
   /* ── CTA ── */
@@ -1582,7 +1919,7 @@ textarea:focus-visible {
   overflow: hidden;
 }
 
-/* bg div unused */
+/* bg div — hidden at 1440px, used at smaller viewports */
 .video-section__bg {
   display: none;
 }
@@ -1621,7 +1958,7 @@ textarea:focus-visible {
 .video-section__title {
   width: 750px;
   height: 114px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   font-size: 40px;
   line-height: 57px;
@@ -1635,7 +1972,7 @@ textarea:focus-visible {
 .video-section__subtitle {
   width: 447px;
   height: 40px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
@@ -1977,10 +2314,17 @@ textarea:focus-visible {
   text-decoration: none;
   white-space: nowrap;
   transition: opacity 0.2s ease;
+  border-radius: 2px; /* allows focus ring to follow shape */
 }
 
 .footer__nav a:hover {
   opacity: 0.8;
+}
+
+.footer__nav a:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 3px;
+  opacity: 1;
 }
 
 /* Social icons — gap 13px */
@@ -2006,10 +2350,17 @@ textarea:focus-visible {
   opacity: 0.85;
 }
 
+.footer__social-link:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 3px;
+  opacity: 1;
+}
+
 .footer__social-link img {
   width: 17px;
   height: 17px;
   object-fit: contain;
+  pointer-events: none; /* decorative — anchor handles the interaction */
 }
 
 /* Divider line — 1px solid white */
@@ -2018,3 +2369,596 @@ textarea:focus-visible {
   height: 1px;
   background: rgba(255, 255, 255, 0.5);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   15. WIDE SCREENS > 1440px — Keep everything centered
+═══════════════════════════════════════════════════════════ */
+@media (min-width: 1441px) {
+
+  .nav {
+    margin: 0 auto;
+    width: 1164px;
+  }
+
+  .nav__logo {
+    margin-left: -14.5px;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   16. MODAL — Request a Dish
+═══════════════════════════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 40px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal__title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #1A1A1A;
+  margin-bottom: 24px;
+}
+
+.modal__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.modal__input,
+.modal__textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #1A1A1A;
+  background: #FFFFFF;
+  box-sizing: border-box;
+}
+
+.modal__input::placeholder,
+.modal__textarea::placeholder {
+  color: #AAAAAA;
+}
+
+.modal__input:focus,
+.modal__textarea:focus {
+  outline: none;
+  border-color: #1AC073;
+}
+
+.modal__textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.modal__btn {
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.modal__btn--cancel {
+  background: #F2F2F2;
+  color: #1A1A1A;
+}
+
+.modal__btn--cancel:hover {
+  background: #E0E0E0;
+}
+
+.modal__btn--submit {
+  background: #1AC073;
+  color: #FFFFFF;
+}
+
+.modal__btn--submit:hover {
+  background: #17a865;
+  transform: translateY(-1px);
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   17. PERFORMANCE HINTS — will-change for animated elements
+   Applied only to elements that use CSS transitions/transforms.
+   Does NOT affect any layout or visual values.
+═══════════════════════════════════════════════════════════ */
+
+/* Carousel arrows scale on hover */
+.popular__arrow {
+  will-change: transform;
+}
+
+/* Video play button scales on hover */
+.video-section__play-btn {
+  will-change: transform;
+}
+
+/* Hamburger hidden on desktop */
+.nav__hamburger {
+  display: none;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   18. MOTION ACCESSIBILITY — prefers-reduced-motion
+   Disables animations/transitions for users who request it.
+   Does NOT affect the 1440px desktop layout or dimensions.
+═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+
+  /* Disable smooth scroll */
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Disable all transitions and animations globally */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Modal — no entrance animation */
+  .modal {
+    animation: none;
+  }
+}
+
+
+
+/* =========================================================
+   FINAL MOBILE OVERFLOW + CROPPING FIX
+   Applied at end to override any conflicting rules above.
+   Desktop (≥769px) is completely unaffected.
+========================================================= */
+@media (max-width: 768px) {
+
+  /* ── Global ── */
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ── Section overflow — remove all independent scroll contexts ── */
+  .hero,
+  .kitchen,
+  .video-section,
+  .contact,
+  .footer {
+    overflow: visible;
+    height: auto;
+  }
+
+  .hero {
+    min-height: unset;
+  }
+
+  .kitchen {
+    background: #F7F8FA;
+  }
+
+  /* ── Nav dropdown — absolute (not fixed) to avoid scroll trap ── */
+  .nav__right {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  /* Nav links — horizontal wrap inside dropdown */
+  .nav__links {
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+  }
+
+  /* ── Width guards — no element wider than viewport ── */
+  .hero__inner,
+  .kitchen__inner,
+  .video-section__container,
+  .popular,
+  .popular__carousel-wrap,
+  .popular__swiper,
+  .contact__inner,
+  .footer__inner,
+  .footer__menu,
+  .footer__nav {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ── Contact section ── */
+  .contact {
+    padding: 60px 20px 48px;
+    min-height: auto;
+  }
+
+  .contact__inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .contact__left {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .contact__heading-wrap {
+    position: relative;
+    width: 100%;
+    top: auto;
+    left: auto;
+  }
+
+  .contact__heading {
+    width: 100%;
+  }
+
+  .contact__subtext {
+    width: 100%;
+  }
+
+  .contact__form {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .contact__row {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .contact__input {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .contact__textarea {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 140px;
+    min-height: 140px;
+    max-height: none;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+
+  .contact__submit {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Re-show illustration, centered with safe max-width */
+  .contact__right {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+  }
+
+  .contact__illustration {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    height: auto;
+    padding: 40px 20px 32px;
+  }
+
+  .footer__inner {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .footer__menu {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    height: auto;
+    text-align: center;
+    width: 100%;
+  }
+
+  .footer__brand {
+    font-size: 28px;
+  }
+
+  .footer__nav {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .footer__nav a {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .footer__social {
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .footer__divider {
+    margin-top: 20px;
+  }
+
+  /* ── Images — never overflow ── */
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+}
+
+/* ==========================================
+   VIDEO SECTION MOBILE FIX
+   Overrides base desktop fixed widths/positions
+   that survive below the 1439px query.
+   Desktop (≥769px) unaffected.
+========================================== */
+@media (max-width: 768px) {
+
+  .video-section {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 60px 20px;
+    height: auto;
+    /* percentage-based gradient so it splits at 50% regardless of height */
+    background: linear-gradient(to bottom, #FAFAFA 50%, #C7EACC 50%);
+    box-sizing: border-box;
+  }
+
+  /* Reset the absolute positioning and fixed 1050px width */
+  .video-section__container {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    padding: 0;
+    gap: 32px;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  /* Text block */
+  .video-section__content {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    text-align: center;
+    align-items: center;
+  }
+
+  /* Heading — reset fixed 750px width */
+  .video-section__title {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    font-size: 28px;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  /* Subtitle — reset fixed 447px width */
+  .video-section__subtitle {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    text-align: center;
+  }
+
+  /* Video card — reset fixed 877px width */
+  .video-section__video-card {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 877 / 442;
+  }
+
+  /* Play button — scale down and re-center */
+  .video-section__play-btn {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  .video-section__play-btn:hover {
+    transform: translate(-50%, -50%) scale(0.88);
+  }
+
+  /* Video element itself */
+  .video-section video,
+  .video-section__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+}
+
+/* ==========================================
+   CAROUSEL — desktop restore + mobile single card
+========================================== */
+
+/* DESKTOP/TABLET — restore original card dimensions */
+@media (min-width: 769px) {
+
+  .swiper-slide {
+    width: auto !important;
+  }
+
+  .swiper-slide .food-card {
+    width: 277px;
+    max-width: 277px;
+  }
+
+}
+
+/* MOBILE — EXACTLY 1 CARD, NO PEEKING */
+@media (max-width: 768px) {
+
+  .popular {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .popular__carousel-wrap {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .popular__swiper {
+    width: 100% !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+  }
+
+  .popular__swiper .swiper-wrapper {
+    align-items: flex-start;
+  }
+
+  .popular__swiper .swiper-slide {
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .popular__swiper .food-card,
+  .popular__swiper .food-card--carousel {
+    width: 260px !important;
+    max-width: 260px !important;
+    height: auto !important;
+  }
+
+  .popular__swiper .food-card .food-card__img-wrap,
+  .popular__swiper .food-card--carousel .food-card__img-wrap {
+    width: 100% !important;
+    height: 200px !important;
+  }
+
+  .popular__swiper .food-card .food-card__details,
+  .popular__swiper .food-card--carousel .food-card__details {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .popular__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  .popular__arrow--prev {
+    left: 0;
+  }
+
+  .popular__arrow--next {
+    right: 0;
+  }
+
+}
+

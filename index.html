@@ -6,11 +6,16 @@
   <!-- ── Meta ── -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1AC073" />
   <title>JTGeats — Authentic Home Food in India</title>
+  <meta name="description" content="JTGeats — Authentic home cooked food delivery service in India." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231AC073'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-size='18' font-family='sans-serif' fill='white'>J</text></svg>" />
 
   <!-- ── Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Roboto:wght@400;500&family=Squada+One&family=Montserrat:wght@500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Roboto:wght@400;500;700;800&family=Squada+One&display=swap"
     rel="stylesheet" />
 
   <!-- ── Stylesheet ── -->
@@ -26,17 +31,24 @@
        Frame 38 — 1440×80px | bg #1AC073
   ════════════════════════════════════════ -->
   <header class="site-header">
-    <nav class="nav">
+    <nav class="nav" aria-label="Main navigation">
 
       <!-- Logo -->
       <div class="nav__logo">
-        <div class="nav__brand">JTGeats</div>
+        <a href="#home" class="nav__brand" aria-label="JTGeats — Home">JTGeats</a>
       </div>
 
+      <!-- Hamburger (mobile only) -->
+      <button class="nav__hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navRight" type="button">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
       <!-- Main menu -->
-      <div class="nav__right">
-        <ul class="nav__links">
-          <li><a href="#home">Home</a></li>
+      <div class="nav__right" id="navRight">
+        <ul class="nav__links" role="list">
+          <li><a href="#home" aria-current="page">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#menu">Menu</a></li>
           <li><a href="#blog">Blog</a></li>
@@ -46,13 +58,13 @@
         <!-- Search & Cart -->
         <div class="nav__icons">
           <button class="nav__icon-btn" aria-label="Search">
-            <img src="assets/Search.svg" alt="Search" />
+            <img src="assets/Search.svg" alt="" width="22" height="22" />
           </button>
           <div class="nav__cart-wrap">
-            <button class="nav__icon-btn" aria-label="Cart">
-              <img src="assets/Cart.svg" alt="Cart" />
+            <button class="nav__icon-btn" aria-label="Shopping cart">
+              <img src="assets/Cart.svg" alt="" width="21" height="24" />
             </button>
-            <span class="nav__cart-badge"></span>
+            <span class="nav__cart-badge" aria-hidden="true"></span>
           </div>
         </div>
       </div>
@@ -72,26 +84,27 @@
          HERO / LANDING SECTION
          Frame 38 — 1440×800px | bg #1AC073
     ════════════════════════════════════════ -->
-    <section class="hero" id="home">
+    <section class="hero" id="home" aria-labelledby="hero-heading">
       <div class="container hero__inner">
 
         <!-- Text content -->
         <div class="hero__content">
-          <h1 class="hero__heading">Authentic Home food in India</h1>
+          <h1 class="hero__heading" id="hero-heading">Authentic Home food in India</h1>
           <p class="hero__subtext">JTGeats is a courier service in which authentic home cook food is delivered to a
             customer.</p>
 
           <!-- Search bar -->
-          <div class="hero__search">
-            <input type="text" class="hero__search-input" placeholder="Search food you love" />
-            <button class="hero__search-btn">Search</button>
+          <div class="hero__search" role="search">
+            <label for="heroSearch" class="sr-only">Search food</label>
+            <input type="search" id="heroSearch" class="hero__search-input" placeholder="Search food you love" />
+            <button class="hero__search-btn" type="button">Search</button>
           </div>
         </div>
         <!-- /Text content -->
 
         <!-- Chef illustration -->
-        <div class="hero__illustration">
-          <img src="assets/chef-illustration.svg" alt="Chef cooking" />
+        <div class="hero__illustration" aria-hidden="true">
+          <img src="assets/chef-illustration.svg" alt="" />
         </div>
         <!-- /Chef illustration -->
 
@@ -101,11 +114,11 @@
     <!-- ════════════════════════════════════════
          HOME KITCHEN SECTION
     ════════════════════════════════════════ -->
-    <section class="kitchen" id="menu">
+    <section class="kitchen" id="menu" aria-labelledby="kitchen-heading">
       <div class="kitchen__inner container">
 
         <!-- Section heading -->
-        <h2 class="kitchen__title">Home Kitchen</h2>
+        <h2 class="kitchen__title" id="kitchen-heading">Home Kitchen</h2>
 
         <!-- Grid of 12 cards (3 rows × 4 cols) -->
         <div class="kitchen__grid">
@@ -113,99 +126,107 @@
           <!-- Row 1 -->
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/1.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/1.png" alt="Home made pizza with olives and toppings" loading="lazy" class="food-card__img" />
               <div class="food-card__badge">50%</div>
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
 
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/2.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/2.png" alt="Home made pizza on a wooden board" loading="lazy" class="food-card__img" />
               <div class="food-card__badge">50%</div>
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
 
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/3.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/3.png" alt="Home made pizza with basil and vegetables" loading="lazy" class="food-card__img" />
               <div class="food-card__badge">20%</div>
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
 
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/4.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/4.png" alt="Cheesy home made pizza with mozzarella" loading="lazy" class="food-card__img" />
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹123</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
@@ -213,99 +234,107 @@
           <!-- Row 2 -->
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/5.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/5.png" alt="Home made pizza with fresh herbs" loading="lazy" class="food-card__img" />
               <div class="food-card__badge">50%</div>
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
 
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/6.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/6.png" alt="Classic home made pizza" loading="lazy" class="food-card__img" />
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
 
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/food7.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/food7.png" alt="Home made pizza with peppers and vegetables" loading="lazy" class="food-card__img" />
               <div class="food-card__badge">20%</div>
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
 
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/8.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/8.png" alt="Home made pizza with rich tomato sauce" loading="lazy" class="food-card__img" />
               <div class="food-card__badge">50%</div>
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
@@ -313,98 +342,106 @@
           <!-- Row 3 -->
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/2.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/2.png" alt="Home made pizza on a wooden board" loading="lazy" class="food-card__img" />
               <div class="food-card__badge">50%</div>
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
 
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/4.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/4.png" alt="Cheesy home made pizza with mozzarella" loading="lazy" class="food-card__img" />
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
 
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/3.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/3.png" alt="Home made pizza with basil and vegetables" loading="lazy" class="food-card__img" />
               <div class="food-card__badge">20%</div>
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
 
           <article class="food-card">
             <div class="food-card__img-wrap">
-              <img src="assets/1.png" alt="Home made pizza" class="food-card__img" />
+              <img src="assets/1.png" alt="Home made pizza with olives and toppings" loading="lazy" class="food-card__img" />
             </div>
             <div class="food-card__details">
-              <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                 <span class="food-card__name">Home made pizza</span>
                 <span class="food-card__price">₹190</span>
               </div>
               <div class="food-card__meta">
                 <div class="food-card__tags">
                   <span class="food-card__rating">
-                    <img src="assets/star.svg" width="12" height="12" alt="" class="star-icon" />
+                    <img src="assets/star.svg" width="12" height="12" alt="" loading="lazy" class="star-icon" />
                     4.7
                   </span>
                   <span class="food-card__time">50-79 min</span>
                 </div>
-                <button class="food-card__add" aria-label="Add to cart">
-                  <img src="assets/plus.svg" width="12" height="12" alt="" />
+                <button type="button" class="food-card__add" aria-label="Add to cart">
+                  <img src="assets/plus.svg" width="12" height="12" alt="" loading="lazy" />
                 </button>
+              </div>
               </div>
             </div>
           </article>
@@ -420,8 +457,8 @@
           <div class="popular__carousel-wrap">
 
             <!-- Prev arrow -->
-            <button class="popular__arrow popular__arrow--prev" id="popularPrev" aria-label="Previous">
-              <svg viewBox="0 0 72 72" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+            <button type="button" class="popular__arrow popular__arrow--prev" id="popularPrev" aria-label="Previous slide">
+              <svg viewBox="0 0 72 72" width="72" height="72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                 <circle cx="36" cy="36" r="35.5" fill="#FFFFFF" stroke="#1AC073" stroke-width="3" />
                 <polygon points="42,20 24,36 42,52" fill="#1AC073" />
               </svg>
@@ -434,17 +471,18 @@
                 <div class="swiper-slide">
                   <article class="food-card food-card--carousel">
                     <div class="food-card__img-wrap">
-                      <img src="assets/food1.png" alt="Home made pizza" class="food-card__img" />
+                      <img src="assets/food1.png" alt="Home made pizza on a wooden board" loading="lazy" class="food-card__img" />
                     </div>
                     <div class="food-card__details">
-                      <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                         <span class="food-card__name">Home made pizza</span>
                         <span class="food-card__price">₹190</span>
                       </div>
                       <div class="food-card__meta">
                         <div class="food-card__tags">
                           <span class="food-card__rating">
-                            <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21">
+                            <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21" aria-hidden="true" focusable="false">
                               <path
                                 d="M8 1l1.854 3.756L14 5.528l-3 2.924.708 4.132L8 10.5l-3.708 2.084L5 8.452 2 5.528l4.146-.772z" />
                             </svg>
@@ -452,31 +490,33 @@
                           </span>
                           <span class="food-card__time">50-79 min</span>
                         </div>
-                        <button class="food-card__add" aria-label="Add to cart">
-                          <svg viewBox="0 0 22 20" width="12" height="11" fill="none">
+                        <button type="button" class="food-card__add" aria-label="Add to cart">
+                          <svg viewBox="0 0 22 20" width="12" height="11" fill="none" aria-hidden="true" focusable="false">
                             <path d="M11 4V16M5 10H17" stroke="#fff" stroke-width="3.5" stroke-linecap="round" />
                           </svg>
                         </button>
                       </div>
-                    </div>
+              </div>
+            </div>
                   </article>
                 </div>
 
                 <div class="swiper-slide">
                   <article class="food-card food-card--carousel">
                     <div class="food-card__img-wrap">
-                      <img src="assets/chicken1.png" alt="Tandoori Chicken" class="food-card__img" />
+                      <img src="assets/chicken1.png" alt="Tandoori Chicken" loading="lazy" class="food-card__img" />
                       <div class="food-card__badge">20%</div>
                     </div>
                     <div class="food-card__details">
-                      <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                         <span class="food-card__name">Tandoori Chicken</span>
                         <span class="food-card__price">₹184</span>
                       </div>
                       <div class="food-card__meta">
                         <div class="food-card__tags">
                           <span class="food-card__rating">
-                            <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21">
+                            <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21" aria-hidden="true" focusable="false">
                               <path
                                 d="M8 1l1.854 3.756L14 5.528l-3 2.924.708 4.132L8 10.5l-3.708 2.084L5 8.452 2 5.528l4.146-.772z" />
                             </svg>
@@ -484,31 +524,33 @@
                           </span>
                           <span class="food-card__time">15-29 min</span>
                         </div>
-                        <button class="food-card__add" aria-label="Add to cart">
-                          <svg viewBox="0 0 22 20" width="12" height="11" fill="none">
+                        <button type="button" class="food-card__add" aria-label="Add to cart">
+                          <svg viewBox="0 0 22 20" width="12" height="11" fill="none" aria-hidden="true" focusable="false">
                             <path d="M11 4V16M5 10H17" stroke="#fff" stroke-width="3.5" stroke-linecap="round" />
                           </svg>
                         </button>
                       </div>
-                    </div>
+              </div>
+            </div>
                   </article>
                 </div>
 
                 <div class="swiper-slide">
                   <article class="food-card food-card--carousel">
                     <div class="food-card__img-wrap">
-                      <img src="assets/chicken2.png" alt="Chilli Chicken" class="food-card__img" />
+                      <img src="assets/chicken2.png" alt="Chilli Chicken" loading="lazy" class="food-card__img" />
                       <div class="food-card__badge">50%</div>
                     </div>
                     <div class="food-card__details">
-                      <div class="food-card__info-row">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
                         <span class="food-card__name">Chilli Chicken</span>
                         <span class="food-card__price">₹116</span>
                       </div>
                       <div class="food-card__meta">
                         <div class="food-card__tags">
                           <span class="food-card__rating">
-                            <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21">
+                            <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21" aria-hidden="true" focusable="false">
                               <path
                                 d="M8 1l1.854 3.756L14 5.528l-3 2.924.708 4.132L8 10.5l-3.708 2.084L5 8.452 2 5.528l4.146-.772z" />
                             </svg>
@@ -516,11 +558,77 @@
                           </span>
                           <span class="food-card__time">30-40 min</span>
                         </div>
-                        <button class="food-card__add" aria-label="Add to cart">
-                          <svg viewBox="0 0 22 20" width="12" height="11" fill="none">
+                        <button type="button" class="food-card__add" aria-label="Add to cart">
+                          <svg viewBox="0 0 22 20" width="12" height="11" fill="none" aria-hidden="true" focusable="false">
                             <path d="M11 4V16M5 10H17" stroke="#fff" stroke-width="3.5" stroke-linecap="round" />
                           </svg>
                         </button>
+                      </div>
+              </div>
+            </div>
+                  </article>
+                </div>
+
+                <div class="swiper-slide">
+                  <article class="food-card food-card--carousel">
+                    <div class="food-card__img-wrap">
+                      <img src="assets/food4.png" alt="Cheesy home made pizza" loading="lazy" class="food-card__img" />
+                    </div>
+                    <div class="food-card__details">
+              <div class="food-card__info-wrap">
+                <div class="food-card__info-row">
+                        <span class="food-card__name">Home made pizza</span>
+                        <span class="food-card__price">₹190</span>
+                      </div>
+                      <div class="food-card__meta">
+                        <div class="food-card__tags">
+                          <span class="food-card__rating">
+                            <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21" aria-hidden="true" focusable="false">
+                              <path
+                                d="M8 1l1.854 3.756L14 5.528l-3 2.924.708 4.132L8 10.5l-3.708 2.084L5 8.452 2 5.528l4.146-.772z" />
+                            </svg>
+                            4.7
+                          </span>
+                          <span class="food-card__time">50-79 min</span>
+                        </div>
+                        <button type="button" class="food-card__add" aria-label="Add to cart">
+                          <svg viewBox="0 0 22 20" width="12" height="11" fill="none" aria-hidden="true" focusable="false">
+                            <path d="M11 4V16M5 10H17" stroke="#fff" stroke-width="3.5" stroke-linecap="round" />
+                          </svg>
+                        </button>
+                      </div>
+              </div>
+            </div>
+                  </article>
+                </div>
+
+                <div class="swiper-slide">
+                  <article class="food-card food-card--carousel">
+                    <div class="food-card__img-wrap">
+                      <img src="assets/pizza1.png" alt="Classic pizza with fresh toppings" loading="lazy" class="food-card__img" />
+                    </div>
+                    <div class="food-card__details">
+                      <div class="food-card__info-wrap">
+                        <div class="food-card__info-row">
+                          <span class="food-card__name">Classic Pizza</span>
+                          <span class="food-card__price">₹175</span>
+                        </div>
+                        <div class="food-card__meta">
+                          <div class="food-card__tags">
+                            <span class="food-card__rating">
+                              <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21" aria-hidden="true" focusable="false">
+                                <path d="M8 1l1.854 3.756L14 5.528l-3 2.924.708 4.132L8 10.5l-3.708 2.084L5 8.452 2 5.528l4.146-.772z" />
+                              </svg>
+                              4.5
+                            </span>
+                            <span class="food-card__time">25-35 min</span>
+                          </div>
+                          <button type="button" class="food-card__add" aria-label="Add to cart">
+                            <svg viewBox="0 0 22 20" width="12" height="11" fill="none" aria-hidden="true" focusable="false">
+                              <path d="M11 4V16M5 10H17" stroke="#fff" stroke-width="3.5" stroke-linecap="round" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </article>
@@ -529,29 +637,31 @@
                 <div class="swiper-slide">
                   <article class="food-card food-card--carousel">
                     <div class="food-card__img-wrap">
-                      <img src="assets/food4.png" alt="Home made pizza" class="food-card__img" />
+                      <img src="assets/food2.png" alt="Spicy chicken curry" loading="lazy" class="food-card__img" />
+                      <div class="food-card__badge">15%</div>
                     </div>
                     <div class="food-card__details">
-                      <div class="food-card__info-row">
-                        <span class="food-card__name">Home made pizza</span>
-                        <span class="food-card__price">₹190</span>
-                      </div>
-                      <div class="food-card__meta">
-                        <div class="food-card__tags">
-                          <span class="food-card__rating">
-                            <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21">
-                              <path
-                                d="M8 1l1.854 3.756L14 5.528l-3 2.924.708 4.132L8 10.5l-3.708 2.084L5 8.452 2 5.528l4.146-.772z" />
-                            </svg>
-                            4.7
-                          </span>
-                          <span class="food-card__time">50-79 min</span>
+                      <div class="food-card__info-wrap">
+                        <div class="food-card__info-row">
+                          <span class="food-card__name">Chicken Curry</span>
+                          <span class="food-card__price">₹155</span>
                         </div>
-                        <button class="food-card__add" aria-label="Add to cart">
-                          <svg viewBox="0 0 22 20" width="12" height="11" fill="none">
-                            <path d="M11 4V16M5 10H17" stroke="#fff" stroke-width="3.5" stroke-linecap="round" />
-                          </svg>
-                        </button>
+                        <div class="food-card__meta">
+                          <div class="food-card__tags">
+                            <span class="food-card__rating">
+                              <svg viewBox="0 0 16 16" width="12" height="12" fill="#1B1C21" aria-hidden="true" focusable="false">
+                                <path d="M8 1l1.854 3.756L14 5.528l-3 2.924.708 4.132L8 10.5l-3.708 2.084L5 8.452 2 5.528l4.146-.772z" />
+                              </svg>
+                              4.6
+                            </span>
+                            <span class="food-card__time">20-30 min</span>
+                          </div>
+                          <button type="button" class="food-card__add" aria-label="Add to cart">
+                            <svg viewBox="0 0 22 20" width="12" height="11" fill="none" aria-hidden="true" focusable="false">
+                              <path d="M11 4V16M5 10H17" stroke="#fff" stroke-width="3.5" stroke-linecap="round" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </article>
@@ -563,8 +673,8 @@
             <!-- /swiper -->
 
             <!-- Next arrow -->
-            <button class="popular__arrow popular__arrow--next" id="popularNext" aria-label="Next">
-              <svg viewBox="0 0 72 72" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+            <button type="button" class="popular__arrow popular__arrow--next" id="popularNext" aria-label="Next slide">
+              <svg viewBox="0 0 72 72" width="72" height="72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                 <circle cx="36" cy="36" r="35.5" fill="#1AC073" />
                 <polygon points="30,20 48,36 30,52" fill="#fff" />
               </svg>
@@ -578,22 +688,21 @@
 
         <!-- Request a Dish CTA — ONE button only -->
         <div class="kitchen__cta">
-          <button class="kitchen__cta-btn" id="openModalBtn">Request a Dish</button>
+          <button type="button" class="kitchen__cta-btn" id="openModalBtn">Request a Dish</button>
         </div>
 
       </div>
       <!-- /kitchen__inner -->
     </section> <!-- /HOME KITCHEN -->
-    <section class="video-section">
+    <section class="video-section" aria-labelledby="video-heading">
 
-      <div class="video-section__bg"></div>
+      <div class="video-section__bg" aria-hidden="true"></div>
 
       <div class="video-section__container">
 
         <div class="video-section__content">
-          <h2 class="video-section__title">
-            We are providing best <br>
-            home cooked food delivery service.
+          <h2 class="video-section__title" id="video-heading">
+            We are providing best home cooked food delivery service.
           </h2>
 
           <p class="video-section__subtitle">
@@ -604,13 +713,17 @@
 
         <div class="video-section__video-card">
 
-          <video class="video-section__video" id="foodVideo">
+          <video class="video-section__video" id="foodVideo"
+            preload="metadata"
+            aria-label="Home cooked food delivery service video">
             <source src="assets/food-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
           </video>
 
-          <div class="video-section__overlay"></div>
+          <div class="video-section__overlay" aria-hidden="true"></div>
 
-          <button class="video-section__play-btn" id="videoPlayBtn"></button>
+          <button class="video-section__play-btn" id="videoPlayBtn"
+            aria-label="Play video" type="button"></button>
 
         </div>
 
@@ -622,7 +735,7 @@
          CONTACT SECTION
          1440×603px | bg #F7F8FA
     ════════════════════════════════════════ -->
-    <section class="contact" id="contact">
+    <section class="contact" id="contact" aria-labelledby="contact-heading">
       <div class="contact__inner">
 
         <!-- Left: form -->
@@ -630,33 +743,36 @@
 
           <!-- Heading + subtext -->
           <div class="contact__heading-wrap">
-            <h2 class="contact__heading">Do you have a question<br>or want to become a seller?</h2>
+            <h2 class="contact__heading" id="contact-heading">Do you have a question or want to become a seller?</h2>
             <p class="contact__subtext">Fill this form and our manager will contact you next 48 hours.</p>
           </div>
 
           <!-- Form fields -->
-          <div class="contact__form">
+          <form class="contact__form" aria-label="Contact form" novalidate>
 
             <!-- Name + Email row -->
             <div class="contact__row">
-              <input type="text" class="contact__input" placeholder="Your Name" />
-              <input type="email" class="contact__input" placeholder="Your e-mail" />
+              <label for="contactName" class="sr-only">Your Name</label>
+              <input type="text" id="contactName" name="name" class="contact__input" placeholder="Your Name" autocomplete="name" />
+              <label for="contactEmail" class="sr-only">Your e-mail</label>
+              <input type="email" id="contactEmail" name="email" class="contact__input" placeholder="Your e-mail" autocomplete="email" />
             </div>
 
             <!-- Message textarea -->
-            <textarea class="contact__textarea" placeholder="Your message"></textarea>
+            <label for="contactMessage" class="sr-only">Your message</label>
+            <textarea id="contactMessage" name="message" class="contact__textarea" placeholder="Your message"></textarea>
 
             <!-- Submit button -->
-            <button class="contact__submit">Submit</button>
+            <button type="submit" class="contact__submit">Submit</button>
 
-          </div>
+          </form>
 
         </div>
         <!-- /Left -->
 
         <!-- Right: delivery illustration -->
-        <div class="contact__right">
-          <img src="assets/delivery-illustration.svg" alt="Delivery illustration" class="contact__illustration" />
+        <div class="contact__right" aria-hidden="true">
+          <img src="assets/delivery-illustration.svg" alt="" loading="lazy" class="contact__illustration" />
         </div>
 
       </div>
@@ -680,7 +796,7 @@
         <span class="footer__brand">JTGeats</span>
 
         <!-- Nav links -->
-        <nav class="footer__nav">
+        <nav class="footer__nav" aria-label="Footer navigation">
           <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#menu">Menu</a>
@@ -691,10 +807,10 @@
         <!-- Social icons -->
         <div class="footer__social">
           <a href="#" class="footer__social-link" aria-label="Facebook">
-            <img src="assets/Facebook.svg" alt="Facebook" />
+            <img src="assets/Facebook.svg" alt="Facebook" loading="lazy" />
           </a>
           <a href="#" class="footer__social-link" aria-label="Instagram">
-            <img src="assets/instagram.svg" alt="Instagram" />
+            <img src="assets/instagram.svg" alt="Instagram" loading="lazy" />
           </a>
         </div>
 
@@ -707,6 +823,25 @@
   </footer>
   <!-- /FOOTER -->
 
+
+  <!-- ════════════════════════════════════════
+       REQUEST A DISH MODAL
+  ════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal">
+      <h2 class="modal__title" id="modalTitle">Request a Dish</h2>
+      <div class="modal__fields">
+        <label for="modalDishName" class="sr-only">Dish name</label>
+        <input type="text" id="modalDishName" class="modal__input" placeholder="Dish name" />
+        <label for="modalDescription" class="sr-only">Description</label>
+        <textarea id="modalDescription" class="modal__textarea" placeholder="Description"></textarea>
+      </div>
+      <div class="modal__actions">
+        <button type="button" class="modal__btn modal__btn--cancel" id="modalCancel">Cancel</button>
+        <button type="button" class="modal__btn modal__btn--submit" id="modalSubmit">Submit Request</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ════════════════════════════════════════
        SCRIPTS
