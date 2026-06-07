@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
       speed: 400,
 
       autoplay: {
-        delay: 3000,
+        delay: 5000,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       },
