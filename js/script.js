@@ -150,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   /* ═══════════════════════════════════════════════════════════
-  /* ═══════════════════════════════════════════════════════════
      2. CAROUSEL (Swiper)
   ═══════════════════════════════════════════════════════════ */
   if (typeof Swiper !== 'undefined' && document.querySelector('.popular__swiper')) {

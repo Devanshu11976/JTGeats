@@ -89,9 +89,7 @@ textarea {
   -webkit-tap-highlight-color: transparent;
 }
 
-a {
-  -webkit-tap-highlight-color: transparent;
-}
+
 
 button:focus-visible,
 a:focus-visible,
@@ -1161,9 +1159,9 @@ textarea:focus-visible {
 /* ── 768px — Tablet portrait ── */
 @media (max-width: 768px) {
 
-  /* Header fixed on mobile so dropdown anchors correctly */
+  /* Header absolute (scrolls away) on mobile to match 1440px desktop behavior */
   .site-header {
-    position: fixed;
+    position: absolute;
     overflow: visible;
   }
 
@@ -1179,7 +1177,7 @@ textarea:focus-visible {
     max-width: 100%;
   }
 
-  /* Nav — hamburger replaces full menu */
+  /* Restore hamburger menu toggle button on mobile */
   .nav__hamburger {
     display: flex;
     flex-direction: column;
@@ -1215,20 +1213,22 @@ textarea:focus-visible {
     transform: translateY(-8px) rotate(-45deg);
   }
 
+  /* Styled mobile dropdown overlay menu — Forest green background */
   .nav__right {
     display: none;
-    position: fixed;
+    position: absolute;
     top: 80px;
     left: 0;
     width: 100%;
-    background: #1AC073;
+    background: #117043;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 16px 24px 24px;
-    gap: 16px;
+    align-items: center;
+    padding: 30px 24px;
+    gap: 24px;
     z-index: 200;
     box-sizing: border-box;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 0 0 16px 16px; /* clean curved design */
   }
 
   .nav__right--open {
@@ -1236,13 +1236,29 @@ textarea:focus-visible {
   }
 
   .nav__links {
+    display: flex;
     flex-direction: column;
-    gap: 16px;
+    align-items: center;
+    gap: 20px;
     width: 100%;
   }
 
+  .nav__links a {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #FFFFFF;
+  }
+
   .nav__icons {
-    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    margin-top: 10px;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 20px;
   }
 
   /* Hero — stack vertically */
@@ -2526,8 +2542,10 @@ textarea:focus-visible {
 }
 
 /* Hamburger hidden on desktop */
-.nav__hamburger {
-  display: none;
+@media (min-width: 769px) {
+  .nav__hamburger {
+    display: none;
+  }
 }
 
 
@@ -2595,26 +2613,31 @@ textarea:focus-visible {
     background: #F7F8FA;
   }
 
-  /* ── Nav dropdown — absolute (not fixed) to avoid scroll trap ── */
+  /* Dynamic dropdown menu positioning */
   .nav__right {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    max-width: 100%;
-    max-height: none;
-    overflow: visible;
-    box-sizing: border-box;
+    position: absolute !important;
+    width: 100% !important;
+    background: #117043 !important;
+    display: none;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 24px !important;
+    padding: 30px 24px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
   }
 
-  /* Nav links — horizontal wrap inside dropdown */
+  .nav__right--open {
+    display: flex !important;
+  }
+
   .nav__links {
-    flex-direction: row !important;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 20px !important;
+    width: 100% !important;
   }
 
   /* ── Width guards — no element wider than viewport ── */
